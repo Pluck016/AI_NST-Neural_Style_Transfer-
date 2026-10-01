@@ -37,7 +37,7 @@ encoder = VGGEncoder('vgg_normalised.pth').to(device)
 decoder = Decoder().to(device)
 
 model_path = os.path.join(os.path.dirname(__file__), 'experiment', 'experiment2', 'decoder_final.pth')
-decoder.load_state_dict(torch.load(model_path, weights_only=True))
+decoder.load_state_dict(torch.load(model_path, weights_only=True, map_location=torch.device('cpu')))
 
 encoder.eval()
 decoder.eval()
