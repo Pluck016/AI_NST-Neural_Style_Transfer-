@@ -114,6 +114,9 @@ def index():
                 content_image = Image.open(content_path).convert('RGB')
                 style_image = Image.open(style_path).convert('RGB')
 
+                content_image = content_image.resize((256, 256))
+                style_image = style_image.resize((256, 256))
+
                 alpha = float(form.alpha.data)
                 with torch.no_grad():
                     stylized_image = style_transfer(content_image, style_image, encoder, decoder, alpha, device)
