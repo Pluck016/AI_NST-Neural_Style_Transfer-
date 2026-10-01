@@ -1,0 +1,5 @@
+﻿*venv/
+content_data/
+style_data/
+
+*.zip
