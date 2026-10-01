@@ -35,7 +35,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 encoder = VGGEncoder('vgg_normalised.pth').to(device)
 decoder = Decoder().to(device)
-decoder.load_state_dict(torch.load(r'C:\Users\ASUS\OneDrive\Desktop\NST_CODE\experiment\experiment2\decoder_final.pth', weights_only=True))
+
+model_path = os.path.join(os.path.dirname(__file__), 'experiment', 'experiment2', 'decoder_final.pth')
+decoder.load_state_dict(torch.load(model_path, weights_only=True))
 
 encoder.eval()
 decoder.eval()
