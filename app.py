@@ -115,7 +115,8 @@ def index():
                 style_image = Image.open(style_path).convert('RGB')
 
                 alpha = float(form.alpha.data)
-                stylized_image = style_transfer(content_image, style_image, encoder, decoder, alpha, device)
+                with torch.no_grad():
+                    stylized_image = style_transfer(content_image, style_image, encoder, decoder, alpha, device)
 
                 result_filename = 'stylized_' + content_filename
                 result_path = os.path.join(app.config['UPLOAD_FOLDER'], result_filename)
