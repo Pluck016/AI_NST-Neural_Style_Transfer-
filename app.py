@@ -1,4 +1,5 @@
 import os
+import gc
 import torch
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from flask_wtf import FlaskForm
@@ -59,17 +60,26 @@ def style_transfer(content_image, style_image, encoder, decoder, alpha, device):
     content_image = content_transform(content_image).unsqueeze(0).to(device)
     style_image = style_transform(style_image).unsqueeze(0).to(device)
 
-    with torch.no_grad():
-        content_feats = encoder(content_image, is_test=True)
-        style_feats = encoder(style_image, is_test=True)
+    try:
 
-        stylized_feats = adaptive_instance_normalization(content_feats, style_feats)
+        with torch.no_grad():
+            content_feats = encoder(content_image, is_test=True)
+            style_feats = encoder(style_image, is_test=True)
 
-        stylized_feats = alpha * stylized_feats + (1 - alpha) * content_feats
+            stylized_feats = adaptive_instance_normalization(content_feats, style_feats)
 
-        stylized_image = decoder(stylized_feats)
+            stylized_feats = alpha * stylized_feats + (1 - alpha) * content_feats
 
-    return stylized_image
+            stylized_image = decoder(stylized_feats)
+
+            return stylized_image
+
+    finally:
+        del content_image, style_image, content_feats, style_feats, stylized_feats
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
+        gc.collect()
 
 
 def save_image(image, path):
