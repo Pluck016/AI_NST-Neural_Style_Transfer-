@@ -10,6 +10,7 @@ from wtforms.validators import InputRequired
 from PIL import Image
 from torchvision import transforms
 import io
+from PIL import Image, ImageFilter
 
 # Import your existing AdaIN code
 from utils.models import VGGEncoder, Decoder
@@ -49,12 +50,12 @@ def allowed_file(filename):
 
 def style_transfer(content_image, style_image, encoder, decoder, alpha, device):
     content_transform = transforms.Compose([
-        transforms.Resize((384, 384)),
+        transforms.Resize((256, 256)),
         transforms.ToTensor()
     ])
 
     style_transform = transforms.Compose([
-        transforms.Resize((384, 384)),
+        transforms.Resize((256, 256)),
         transforms.ToTensor()
     ])
     content_image = content_transform(content_image).unsqueeze(0).to(device)
@@ -124,24 +125,29 @@ def index():
                 content_image = Image.open(content_path).convert('RGB')
                 style_image = Image.open(style_path).convert('RGB')
 
-                content_image = content_image.resize((384, 384))
-                style_image = style_image.resize((384, 384))
+                content_image = content_image.resize((256, 256))
+                style_image = style_image.resize((256, 256))
                 alpha = float(form.alpha.data)
+
                 with torch.no_grad():
                     stylized_image = style_transfer(content_image, style_image, encoder, decoder, alpha, device)
 
                 result_filename = 'stylized_' + content_filename
                 result_path = os.path.join(app.config['UPLOAD_FOLDER'], result_filename)
                 save_image(stylized_image, result_path)
-                
+                with Image.open(result_path) as img:
+                    resized_img = img.resize((img.width * 2, img.height * 2), Image.Resampling.LANCZOS)
+                    sharpened_img = resized_img.filter(ImageFilter.SHARPEN)
+                    sharpened_img.save(result_path)
+
                 result_image = result_filename
             except Exception as e:
                 error = str(e)
-    else:
-        if not content_filename:
-            error = 'Please upload content image'
-        if not style_filename:
-            error = 'Please upload style image'
+        else:
+            if not content_filename:
+                error = 'Please upload content image'
+            if not style_filename:
+                error = 'Please upload style image'
 
     return render_template('index.html', form=form, result_image=result_image, content_image=content_filename,
                            style_image=style_filename, error=error)
