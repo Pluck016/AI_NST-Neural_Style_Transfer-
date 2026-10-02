@@ -49,12 +49,12 @@ def allowed_file(filename):
 
 def style_transfer(content_image, style_image, encoder, decoder, alpha, device):
     content_transform = transforms.Compose([
-        transforms.Resize((256, 256)),
+        transforms.Resize((512, 512)),
         transforms.ToTensor()
     ])
 
     style_transform = transforms.Compose([
-        transforms.Resize((256, 256)),
+        transforms.Resize((512, 512)),
         transforms.ToTensor()
     ])
     content_image = content_transform(content_image).unsqueeze(0).to(device)
@@ -124,6 +124,8 @@ def index():
                 content_image = Image.open(content_path).convert('RGB')
                 style_image = Image.open(style_path).convert('RGB')
 
+                content_image = content_image.resize((512, 512))
+                style_image = style_image.resize((512, 512))
                 alpha = float(form.alpha.data)
                 with torch.no_grad():
                     stylized_image = style_transfer(content_image, style_image, encoder, decoder, alpha, device)
