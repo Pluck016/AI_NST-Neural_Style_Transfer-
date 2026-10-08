@@ -23,6 +23,7 @@ A deep learning web application that merges the artistic style of one image with
 **AI_NST** is an interactive web application powered by Convolutional Neural Networks (CNNs). By employing optimization techniques on intermediate activations of pretrained vision models (such as VGG19), it separates and recombines the structure of a content image with the stylistic attributes (textures, colors, brushstrokes) of a reference artwork.
 
 ### Key Features
+
 * 🎨 **Style & Content Fusion:** Blends arbitrary content and style image pairs to create new visual artwork.
   
 * ⚡ **PyTorch Integration:** Uses pretrained deep learning backbones for feature extraction and Gram matrix computation.
@@ -58,40 +59,49 @@ Follow these steps to set up the project locally on your machine.
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone [https://github.com/Pluck016/AI_NST-Neural_Style_Transfer-.git](https://github.com/Pluck016/AI_NST-Neural_Style_Transfer-.git)
 Navigate to the project directory:
 
 Bash
+
 cd AI_NST-Neural_Style_Transfer-
 
 Create and activate a virtual environment:
 
 Bash
+
 python -m venv venv
 
 # On Windows:
+
 venv\Scripts\activate
 
 Install the required dependencies:
 
 Bash
+
 pip install -r requirements.txt
+
 Usage
 
 Launch the local Flask server:
 
 Bash
+
 python app.py
 
 Open your web browser and navigate to:
 
 Plaintext
+
 [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 Upload a Content Image (e.g., a photograph) and a Style Image (e.g., a painting), then run the transfer pipeline to generate your stylized image.
 
 ## Roadmap
+
 [x] Basic project architecture and Flask interface
 
 
@@ -107,6 +117,7 @@ Upload a Content Image (e.g., a photograph) and a Style Image (e.g., a painting)
 [ ] Optimize memory footprint for CPU/cloud deployments
 
 ## Contributing
+
 Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
 Fork the Project
