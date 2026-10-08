@@ -91,7 +91,7 @@ Plaintext
 
 Upload a Content Image (e.g., a photograph) and a Style Image (e.g., a painting), then run the transfer pipeline to generate your stylized image.
 
-Roadmap
+## Roadmap
 [x] Basic project architecture and Flask interface
 
 
@@ -106,7 +106,7 @@ Roadmap
 
 [ ] Optimize memory footprint for CPU/cloud deployments
 
-Contributing
+## Contributing
 Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
 Fork the Project
@@ -121,13 +121,9 @@ Commit your Changes (git commit -m 'Add some AmazingFeature')
 Push to the Branch (git push origin feature/AmazingFeature)
 
 
-Open a Pull Request
+Open a Pull Request.
 
-License
-
-Distributed under the MIT License. See LICENSE for more information.
-
-Contact
+## Contact
 
 Pluck016 — GitHub Profile
 
